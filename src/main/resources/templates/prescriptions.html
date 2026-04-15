@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Prescriptions</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Prescription History</h1>
+
+        <form action="/prescriptions/search" method="get">
+            <label>Search Patient</label>
+            <input type="text" name="patientName" required>
+            <button type="submit">Search</button>
+        </form>
+
+        <a href="/prescriptions">View All</a>
+        <a href="/prescriptions/new">Add Prescription</a>
+        <a href="/consultations">Consultations</a>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Medicine</th>
+                <th>Dosage</th>
+                <th>Duration</th>
+                <th>Action</th>
+            </tr>
+
+            <tr th:each="p : ${prescriptions}">
+                <td th:text="${p.id}"></td>
+                <td th:text="${p.patientName}"></td>
+                <td th:text="${p.medicineName}"></td>
+                <td th:text="${p.dosage}"></td>
+                <td th:text="${p.duration}"></td>
+
+                <td>
+                    <a th:href="@{/prescriptions/edit/{id}(id=${p.id})}">Edit</a>
+                    <a th:href="@{/prescriptions/delete/{id}(id=${p.id})}">Delete</a>
+                </td>
+            </tr>
+        </table>
+
+    </div>
+</body>
+
+</html>

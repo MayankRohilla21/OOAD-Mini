@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Consultation</title>
+    <link rel="stylesheet" th:href="@{/style.css}">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1 th:text="${consultation.id} != null ? 'Edit Consultation' : 'Add Consultation'"></h1>
+
+        <form th:action="@{/consultations/save}" th:object="${consultation}" method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            <label>Patient Name</label>
+            <input type="text" th:field="*{patientName}" required>
+
+            <label>Doctor Name</label>
+            <input type="text" th:field="*{doctorName}" required>
+
+            <label>Status</label>
+            <select th:field="*{status}">
+                <option value="Pending">Pending</option>
+                <option value="Completed">Completed</option>
+                <option value="Cancelled">Cancelled</option>
+                <option value="Rescheduled">Rescheduled</option>
+            </select>
+
+            <button type="submit">Save</button>
+            <a href="/consultations">Back</a>
+
+        </form>
+
+    </div>
+</body>
+
+</html>
