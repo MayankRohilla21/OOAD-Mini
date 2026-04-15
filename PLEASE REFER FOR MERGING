@@ -1,0 +1,239 @@
+THIS IS WHAT I did
+
+# OOAD Mini Project – Team Setup & Run Guide
+
+## Project Overview
+
+This project is a Spring Boot + Thymeleaf + MySQL web application.
+Modules currently implemented:
+
+* Consultation Management
+* Prescription Management
+* CRUD operations
+* Search / Filter
+* UI with shared CSS
+
+---
+
+# 1. Software Required
+
+Install these before running:
+
+## Java
+
+* JDK 17 or above (recommended: JDK 21)
+* Check: `java -version`
+
+## IDE
+
+* VS Code (recommended) or IntelliJ IDEA
+
+## VS Code Extensions
+
+* Extension Pack for Java
+* Spring Boot Extension Pack
+
+## Database
+
+* MySQL Server 8+
+* MySQL Workbench (recommended)
+
+## Build Tool
+
+* Maven (usually included via wrapper)
+
+---
+
+# 2. Project Import Steps
+
+1. Clone/download project.
+2. Open project folder in VS Code.
+3. Wait for Java indexing.
+4. Let Maven dependencies download.
+5. Trust workspace if prompted.
+
+---
+
+# 3. MySQL Database Setup
+
+Open MySQL Workbench and run:
+
+```sql
+CREATE DATABASE clinicdb;
+```
+
+Use this database for the project.
+
+---
+
+# 4. Spring Configuration
+
+File: `src/main/resources/application.properties`
+
+Use:
+
+```properties
+spring.application.name=consultation
+
+spring.datasource.url=jdbc:mysql://localhost:3306/clinicdb
+spring.datasource.username=root
+spring.datasource.password=YOUR_PASSWORD
+spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+spring.thymeleaf.cache=false
+server.port=8080
+```
+
+## Important
+
+Replace:
+
+* `YOUR_PASSWORD` with your MySQL password.
+
+If no password, leave blank:
+`spring.datasource.password=`
+
+---
+
+# 5. How to Run the Project
+
+## Option A – VS Code
+
+Run:
+
+* `ConsultationApplication.java`
+
+## Option B – Terminal
+
+```bash
+mvn spring-boot:run
+```
+
+---
+
+# 6. Open in Browser
+
+Main pages:
+
+* `http://localhost:8080/consultations`
+* `http://localhost:8080/prescriptions`
+
+---
+
+# 7. Features Available
+
+## Consultation Module
+
+* Add Consultation
+* Edit Consultation
+* Delete Consultation
+* Complete Consultation
+* Status Dropdown
+
+## Prescription Module
+
+* Add Prescription
+* Edit Prescription
+* Delete Prescription
+* Search by Patient
+* View History
+* Patient Dropdown from Consultations
+
+---
+
+# 8. Important Folder Structure
+
+```text
+src/main/java/consultation/
+  controller/
+  model/
+  repository/
+  service/
+
+src/main/resources/
+  templates/
+  static/style.css
+```
+
+---
+
+# 9. Common Errors & Fixes
+
+## Error: Failed to configure DataSource
+
+Cause: DB settings missing.
+Fix: Check `application.properties`.
+
+## Error: Access denied for user root
+
+Cause: Wrong password.
+Fix: Update datasource password.
+
+## Error: Port 8080 already in use
+
+Fix:
+
+* Stop old app
+* Or change `server.port=8081`
+
+## Tables not created
+
+Fix:
+
+* Ensure app runs successfully
+* Ensure entities have `@Entity`
+* Use `spring.jpa.hibernate.ddl-auto=update`
+
+## Package errors in Java files
+
+Fix:
+Package line must match folder structure.
+Example:
+
+```java
+package consultation.controller;
+```
+
+---
+
+# 10. Team Notes
+
+* Pull latest code before editing.
+* Avoid changing others' files without informing.
+* Test after every change.
+* Commit with clear messages.
+
+Examples:
+
+* Added billing module
+* Fixed UI styling
+* Added inventory CRUD
+
+---
+
+# 11. Final Submission Checklist
+
+* Code runs
+* Database connects
+* UI works
+* GitHub updated
+* Screenshots taken
+* UML diagrams ready
+* Design patterns/principles documented
+* Viva preparation done
+
+---
+
+# 12. Contact Notes
+
+If app fails on another laptop, first check:
+
+1. Java version
+2. MySQL running
+3. Password in properties file
+4. Port 8080 free
+5. Maven dependencies downloaded
