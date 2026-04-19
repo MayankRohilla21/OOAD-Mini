@@ -12,95 +12,110 @@ import consultation.model.Consultation;
 import consultation.model.Prescription;
 import consultation.repository.PrescriptionRepository;
 import consultation.service.ConsultationService;
+import billing.service.BillingService;
 
 @Controller
 public class ConsultationController {
 
     private final ConsultationService consultationService;
     private final PrescriptionRepository prescriptionRepository;
+    private final BillingService billingService;
 
     public ConsultationController(
-        ConsultationService consultationService,
-        PrescriptionRepository prescriptionRepository) {
+            ConsultationService consultationService,
+            PrescriptionRepository prescriptionRepository,
+            BillingService billingService) {
 
-    this.consultationService = consultationService;
-    this.prescriptionRepository = prescriptionRepository;
-}
+        this.consultationService = consultationService;
+        this.prescriptionRepository = prescriptionRepository;
+        this.billingService = billingService;
+    }
 
     @GetMapping("/consultations")
     public String viewConsultations(Model model) {
         model.addAttribute("consultations",
                 consultationService.getAllConsultations());
+        model.addAttribute("billingService", billingService);
         return "consultations";
     }
+
     @GetMapping("/consultations/new")
     public String showForm(Model model) {
         model.addAttribute("consultation", new Consultation());
         return "consultation-form";
-}
+    }
+
     @PostMapping("/consultations/save")
     public String saveConsultation(@ModelAttribute Consultation consultation) {
         consultationService.saveConsultation(consultation);
-    return "redirect:/consultations";
-}
+        return "redirect:/consultations";
+    }
+
     @GetMapping("/consultations/delete/{id}")
     public String deleteConsultation(@PathVariable Long id) {
         consultationService.deleteConsultation(id);
-    return "redirect:/consultations";
+        return "redirect:/consultations";
     }
+
     @GetMapping("/consultations/edit/{id}")
     public String editConsultation(@PathVariable Long id, Model model) {
         model.addAttribute("consultation",
-            consultationService.getConsultationById(id));
-    return "consultation-form";
+                consultationService.getConsultationById(id));
+        return "consultation-form";
     }
+
     @GetMapping("/consultations/complete/{id}")
     public String completeConsultation(@PathVariable Long id) {
-    Consultation consultation =
-            consultationService.getConsultationById(id);
+        Consultation consultation = consultationService.getConsultationById(id);
 
-    if (consultation != null) {
-        consultation.setStatus("Completed");
-        consultationService.saveConsultation(consultation);
+        if (consultation != null) {
+            consultation.setStatus("Completed");
+            consultationService.saveConsultation(consultation);
+        }
+
+        return "redirect:/consultations";
     }
 
-    return "redirect:/consultations";
-    }
     @PostMapping("/prescriptions/save")
     public String savePrescription(@ModelAttribute Prescription prescription) {
-    prescriptionRepository.save(prescription);
-    return "redirect:/prescriptions";
+        prescriptionRepository.save(prescription);
+        return "redirect:/prescriptions";
     }
+
     @GetMapping("/prescriptions/new")
     public String showPrescriptionForm(Model model) {
         model.addAttribute("prescription", new Prescription());
-        model.addAttribute("consultations",consultationService.getAllConsultations());
-    return "prescription-form";
+        model.addAttribute("consultations", consultationService.getAllConsultations());
+        return "prescription-form";
     }
+
     @GetMapping("/prescriptions")
     public String viewPrescriptions(Model model) {
-        model.addAttribute("prescriptions",prescriptionRepository.findAll());
-    return "prescriptions";
+        model.addAttribute("prescriptions", prescriptionRepository.findAll());
+        return "prescriptions";
     }
+
     @GetMapping("/prescriptions/search")
     public String searchPrescription(
-        @RequestParam String patientName,
-        Model model) {
+            @RequestParam String patientName,
+            Model model) {
 
-    model.addAttribute("prescriptions",
-            prescriptionRepository.findAll()
-            .stream()
-            .filter(p -> p.getPatientName()
-            .equalsIgnoreCase(patientName))
-            .toList());
+        model.addAttribute("prescriptions",
+                prescriptionRepository.findAll()
+                        .stream()
+                        .filter(p -> p.getPatientName()
+                                .equalsIgnoreCase(patientName))
+                        .toList());
 
-    return "prescriptions";
+        return "prescriptions";
     }
+
     @GetMapping("/prescriptions/delete/{id}")
     public String deletePrescription(@PathVariable Long id) {
         prescriptionRepository.deleteById(id);
-    return "redirect:/prescriptions";
+        return "redirect:/prescriptions";
     }
+
     @GetMapping("/prescriptions/edit/{id}")
     public String editPrescription(@PathVariable Long id, Model model) {
         model.addAttribute("prescription", prescriptionRepository.findById(id).orElse(null));
