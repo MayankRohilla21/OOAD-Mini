@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @Configuration
 @EnableJpaRepositories(basePackages = {
+        "appointment.repository",
         "consultation.repository",
         "billing.repository"
 })
 @EntityScan(basePackages = {
+        "appointment.model",
         "consultation.model",
         "billing.model"
 })
