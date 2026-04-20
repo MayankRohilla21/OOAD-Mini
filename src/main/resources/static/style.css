@@ -105,3 +105,46 @@ th {
     color: orange;
     font-weight: bold;
 }
+
+/* ===== Inventory / Reports Module (d_59) ===== */
+
+.badge-active {
+    background-color: #16a34a;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.badge-low-stock {
+    background-color: #d97706;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.badge-expired {
+    background-color: #dc2626;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.alert-low-stock {
+    background-color: #fef3c7;
+    border: 1px solid #f59e0b;
+    border-radius: 8px;
+    padding: 12px 16px;
+    margin-bottom: 16px;
+    color: #92400e;
+}
+
+.row-expired {
+    background-color: #fee2e2 !important;
+}
+
+.row-low-stock {
+    background-color: #fef9c3 !important;
+}
