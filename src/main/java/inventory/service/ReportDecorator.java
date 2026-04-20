@@ -43,9 +43,14 @@ public abstract class ReportDecorator {
         @Override
         public Report decorate() {
             String existing = report.getReportData() != null ? report.getReportData() : "{}";
-            // Append filter metadata to the JSON string
-            String filtered = existing.replace("}", ",\"fromDate\":\"" + fromDate
-                    + "\",\"toDate\":\"" + toDate + "\"}");
+            // Safely insert filter metadata before the final closing brace
+            int lastBrace = existing.lastIndexOf('}');
+            String prefix = lastBrace >= 0 ? existing.substring(0, lastBrace) : existing;
+            boolean hasContent = prefix.trim().length() > 1;
+            String filtered = prefix
+                    + (hasContent ? "," : "")
+                    + "\"fromDate\":\"" + fromDate + "\","
+                    + "\"toDate\":\"" + toDate + "\"}";
             report.setReportData(filtered);
             return report;
         }
@@ -63,7 +68,13 @@ public abstract class ReportDecorator {
         @Override
         public Report decorate() {
             String existing = report.getReportData() != null ? report.getReportData() : "{}";
-            String exported = existing.replace("}", ",\"exportFormat\":\"CSV\"}");
+            // Safely insert export metadata before the final closing brace
+            int lastBrace = existing.lastIndexOf('}');
+            String prefix = lastBrace >= 0 ? existing.substring(0, lastBrace) : existing;
+            boolean hasContent = prefix.trim().length() > 1;
+            String exported = prefix
+                    + (hasContent ? "," : "")
+                    + "\"exportFormat\":\"CSV\"}";
             report.setReportData(exported);
             return report;
         }
