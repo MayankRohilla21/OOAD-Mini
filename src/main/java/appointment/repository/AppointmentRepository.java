@@ -9,4 +9,6 @@ import appointment.model.Appointment;
 
 public interface AppointmentRepository extends JpaRepository<Appointment, Long> {
     List<Appointment> findByDoctorNameAndAppointmentDateAndStatusNot(String doctorName, LocalDate appointmentDate, String status);
+
+    long countByAppointmentDate(LocalDate appointmentDate);
 }

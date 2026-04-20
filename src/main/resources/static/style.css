@@ -105,3 +105,28 @@ th {
     color: orange;
     font-weight: bold;
 }
+
+/* Inventory status badges */
+.badge-active {
+    background: #16a34a;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.badge-low-stock {
+    background: #d97706;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}
+
+.badge-expired {
+    background: #dc2626;
+    color: white;
+    padding: 3px 8px;
+    border-radius: 4px;
+    font-size: 13px;
+}

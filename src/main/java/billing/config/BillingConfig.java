@@ -8,12 +8,14 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @EnableJpaRepositories(basePackages = {
         "appointment.repository",
         "consultation.repository",
-        "billing.repository"
+        "billing.repository",
+        "inventory.repository"
 })
 @EntityScan(basePackages = {
         "appointment.model",
         "consultation.model",
-        "billing.model"
+        "billing.model",
+        "inventory.model"
 })
 public class BillingConfig {
 }
