@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Reports Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+    <nav class="navbar navbar-dark bg-dark">
+        <div class="container-fluid">
+            <span class="navbar-brand mb-0 h1">Smart Clinic System</span>
+            <div>
+                <a href="/appointments" class="btn btn-outline-light btn-sm me-2">Appointments</a>
+                <a href="/consultations" class="btn btn-outline-light btn-sm me-2">Consultations</a>
+                <a href="/billing" class="btn btn-outline-light btn-sm me-2">Billing</a>
+                <a href="/inventory" class="btn btn-outline-warning btn-sm">Inventory</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4">
+        <h2 class="mb-4">Reports Dashboard</h2>
+
+        <div class="row g-3 mb-4">
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Today Appointments</h6>
+                        <h3 th:text="${dashboardReport.totalAppointments}">0</h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Revenue Summary</h6>
+                        <h3>INR <span th:text="${dashboardReport.totalRevenue}">0.0</span></h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow-sm h-100">
+                    <div class="card-body">
+                        <h6 class="text-muted">Low Stock Items</h6>
+                        <h3 th:text="${dashboardReport.lowStockItems}">0</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="d-flex gap-2 mb-4">
+            <a href="/reports/low-stock" class="btn btn-warning">View Low Stock Report</a>
+            <a href="/inventory" class="btn btn-dark">Go To Inventory</a>
+        </div>
+
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">Recent Generated Reports</div>
+            <div class="table-responsive">
+                <table class="table table-striped mb-0">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Date</th>
+                            <th>Appointments</th>
+                            <th>Revenue</th>
+                            <th>Low Stock</th>
+                            <th>Details</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="report : ${latestReports}">
+                            <td th:text="${report.id}"></td>
+                            <td th:text="${report.reportType}"></td>
+                            <td th:text="${report.reportDate}"></td>
+                            <td th:text="${report.totalAppointments}"></td>
+                            <td th:text="${report.totalRevenue}"></td>
+                            <td th:text="${report.lowStockItems}"></td>
+                            <td th:text="${report.details}"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
